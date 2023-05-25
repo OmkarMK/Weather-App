@@ -1,0 +1,68 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Weather App</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <div class="container">
+  <h1>Weather🌦️Mate</h1>
+  <form action="/" method="post">
+    <label for="city">Enter a city name:</label>
+    <input type="text" id="city" name="city" required>
+    <button type="submit">Get Weather</button>
+  </form>
+  </div>
+  <script src="index.js"></script>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Weather App</title>
+  <link rel="stylesheet" href="index.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="index.js"></script>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Weather🌦️Mate</h1>
+    <form action="/submit" method="post">
+      <label for="city">Enter a city name:</label>
+      <input type="text" id="city" name="city" required>
+      <button type="submit">Get Weather</button>
+    </form>
+    <div id="output"></div>
+  </div>
+
+  <script>
+    $(document).ready(function () {
+      $('form').submit(function (event) {
+        event.preventDefault();
+        const city = $('#city').val();
+        const data = {
+          'city': city
+        }
+        $.post('/submit', data, (response) => {
+          // console.log(response);
+          const temperature = response.temp;
+          const description = response.desc;
+          const icon = response.icon;
+          $("#output").empty();
+          $("#output").append(
+            `<h3>The temperature in ${city} is ${temperature} degrees Celsius.</h3><p>The weather is currently ${description}.</p><img src="http://openweathermap.org/img/w/${icon}.png" alt="Weather Icon" class="img"/>`
+          )
+        });
+      })
+
+    });
+
+  </script>
+</body>
+
+</html>
